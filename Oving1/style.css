@@ -14,18 +14,18 @@ nav {
     background-color: #fff;
 }
 
-ul {
+#menu ul {
 
 }
 
-ul li {
+#menu ul li {
     list-style: none;
     display: inline-block;
     float: left;
     line-height: 100px;
 }
 
-ul li a {
+#menu ul li a {
     display: block;
     text-decoration: none;
     font-size: 14px;
@@ -69,6 +69,12 @@ ul li a {
     width: 100%;
 }
 
+#content-block-6 ul li {
+    width: 0%;
+}
+
+
+
 .container div {
     background-color: #fff;
     padding: 10px;
@@ -79,9 +85,35 @@ ul li a {
     background-color: #eee;
 }
 
+#myButton {
+    background-color: #4CAF50;
+    border: none;
+    color: white;
+    padding: 5px 10px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+}
+
+#hideButton {
+    background-color: #4CAF50;
+    border: none;
+    color: white;
+    padding: 5px 10px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+}
+
 #footer {
-    background-color: #fff;
-    height: 100px;
+    background-color: white;
+    height: 25px;
     width: 100%;
     bottom: 0;
     position: fixed;
@@ -89,5 +121,7 @@ ul li a {
 
 #footer-content {
     font-size: 14px;
-
+    color: #1e1e1e;
+    text-align: center;
+    line-height: 25px;
 }

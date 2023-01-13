@@ -3,7 +3,7 @@
   <head>
     <title>Min nettside</title>
     <link rel="stylesheet" href="style.css">
-    <script src="main.js"></script>
+    <script data-main="main.js" src="require.js"></script>
   </head>
   <body>
     <div id="menu">
@@ -29,7 +29,7 @@
   
       <div id="content-block-2">
         <h1>Bie-filmen er en film med dette manuset</h1>
-        <p>According to all known laws
+        <p id="beeScript">According to all known laws
           of aviation,
           there is no way a bee
           should be able to fly.
@@ -2010,11 +2010,26 @@
       </div>
 
       <div id="content-block-4">
-        <button id="myButton">Klikk her!</button>
+        <button onclick="increment()" id="myButton">Klikk her!</button>
+        <button onclick="hide()" id="hideButton">Hide button lol</button>
         <p id="counter">0</p>
+      </div> 
+
+      <div id="content-block-5">
+        <p>Her er en knapp som gjør ingenting</p>
+        <button onclick="alert('Du har trykket på knappen')">Trykk her</button>
+      </div>
+
+      <div id="content-block-6">
+        <button onclick="getRandomWords()" id="beeButton">Random words from bee movie</button>
+        <ul>
+          <li id="word1">Home</a></li>
+          <li id="word2">Blog</a></li>
+          <li id="word3">Secret</a></li>
+        </ul>
+        
+      </div>
     </div>
-
-
 
     <div id="footer">
       <div id="footer-content">
