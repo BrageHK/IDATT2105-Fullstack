@@ -1,19 +1,24 @@
 <script>
+/*
 defineProps({
     display: {
         type: String,
         //required: true,
     }
-})
+})*/
+
+export default {
+    name: "Calculator",
+    props: {
+
+    }
+}
 </script>
 
 <template>
-    <div class="display">
-        {{ display }}
-    </div>
+    
+    Hello world
     <div class="calculator-grid">
-        <h1>LOOOL</h1>
-        <div class="display">{{ display }}</div>
         <button @click="clear">C</button>
         <button @click="sign">+/-</button>
         <button @click="percent">%</button>

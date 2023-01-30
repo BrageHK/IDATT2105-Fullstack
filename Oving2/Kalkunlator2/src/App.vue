@@ -1,10 +1,9 @@
-<script>
+<script lang="ts">
 import { RouterLink, RouterView } from "vue-router";
-
 import Calculator from "./components/Calculator.vue";
 
 export default {
-  name: "app",
+  name:"App",
   components: {
     Calculator
   }
@@ -15,7 +14,7 @@ export default {
   <div id="app">
     <Calculator />
   </div>
-  <RouterView />
+  
 </template>
 
 <style scoped>
