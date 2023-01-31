@@ -55,11 +55,13 @@ export default {
     },
     clear() {
       this.value = "";
+      
     },
     equals() {
       this.parseValue();
       this.multiplyAndDivide();
       this.add();
+      this.value = (Math.round(parseFloat(this.value)*100000)/100000).toString();
     },
     parseValue() {
       for(var i = 2; i < this.value.length; i++) {
@@ -71,7 +73,11 @@ export default {
             //console.log(this.value.slice(i))
 
             i+=4;
-          }    
+          }
+          if(this.value[i-2] == "*" || this.value[i-2] == "/") {
+            this.value = this.value.slice(0, i) + " -" + this.value.slice(i+2);
+            i+=3;
+          }
         }
       }
     },
@@ -92,7 +98,9 @@ export default {
           left = left.split("").reverse().join("");
 
           var right = "";
-          for(var j = i + 2; j < this.value.length; j++) {
+          var num = 2;
+          if(this.value[i+2] == " ") num = 3;
+          for(var j = i + num; j < this.value.length; j++) {
             if(this.value[j] == " ") {
               break;
             }
@@ -109,8 +117,12 @@ export default {
             result = parseFloat(left) * parseFloat(right);
           }
 
-          this.value = this.value.replace(left + " " + operator + " " + right, result.toString());
-          i = 0;
+          console.log("value: "+ this.value + " result: " + result.toString())
+
+          
+          if(num == 3) this.value = this.value.replace(left + " " + operator + "  " + right, result.toString());
+          else this.value = this.value.replace(left + " " + operator + " " + right, result.toString());
+          
         }
       }
     },
@@ -118,7 +130,9 @@ export default {
       for(var i = 0; i < this.value.length; i++) {
         if(this.value[i] == "+") {
           var left = "";
-          for(var j = i - 2; j >= 0; j--) {
+          var num = 2;
+          if(this.value[i-2] == " ") num = 3;
+          for(var j = i - num; j >= 0; j--) {
             if(this.value[j] == " ") {
               break;
             }
@@ -136,7 +150,9 @@ export default {
 
           var result = parseFloat(left) + parseFloat(right);
 
-          this.value = this.value.replace(left + " + " + right, result.toString());
+          if(num == 3) this.value = this.value.replace(left + "  + " + right, result.toString());
+          else this.value = this.value.replace(left + " + " + right, result.toString());
+          
           i = 0;
         }
       }
@@ -170,7 +186,7 @@ export default {
     <div class="buttons">
       <div class="grid">
         <button class="button" @click="clear">C</button>
-        <button class="button" @click="answer">ANS</button>
+        <button class="button" @click="parseValue">ANS</button>
         <button class="button" @click="del">DEL</button>
         <button class="button" @click="operator('+')">+</button>
         <button class="button" @click="number(7)">7</button>
@@ -192,11 +208,7 @@ export default {
       </div>
     </div>
   </div>
-  
-
-  
-
-
+ 
 </template>
 
 <style scoped>
