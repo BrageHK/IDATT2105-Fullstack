@@ -1,13 +1,16 @@
 <script lang="ts">
+import Log from "./Log.vue";
+
 export default {
   name: "Calculator",
-  props: {
-    msg: String,
+  components: {
+    Log,
   },
 
   data() {
     return {
       value: "",
+      logArray: [] as string[],
     };
   },
 
@@ -55,22 +58,21 @@ export default {
     },
     clear() {
       this.value = "";
-      
     },
     equals() {
+      if(this.value=="") return;
+      var lastValue = this.value;
       this.parseValue();
       this.multiplyAndDivide();
       this.add();
       this.value = (Math.round(parseFloat(this.value)*100000)/100000).toString();
+      if(this.value != lastValue) this.logArray.push(lastValue + " = " + this.value); 
     },
     parseValue() {
       for(var i = 2; i < this.value.length; i++) {
         if(this.value[i] == "-") {
-          console.log(this.value[i-2]);
           if(this.value[i-2] != "/" && this.value[i-2] != "*"  && this.value[i-2] != "+") {
             this.value = this.value.slice(0, i) + " + -" + this.value.slice(i+2);
-            //console.log(this.value.slice(0, i));
-            //console.log(this.value.slice(i))
 
             i+=4;
           }
@@ -85,7 +87,6 @@ export default {
       for(var i = 0; i < this.value.length; i++) {
         if(this.value[i] == "*" || this.value[i] == "/") {
           var operator = this.value[i];
-          console.log("operator: " + this.value[i]);
 
           var left = "";
           for(var j = i - 2; j >= 0; j--) {
@@ -94,7 +95,6 @@ export default {
             }
             left += this.value[j];
           }
-          console.log("Left before: " + left)
           left = left.split("").reverse().join("");
 
           var right = "";
@@ -107,18 +107,12 @@ export default {
             right += this.value[j];
           }
 
-          console.log("left after: " + left);
-          console.log("right: " + right);
-
           var result = 0;
           if(operator == "/") {
             result = parseFloat(left) / parseFloat(right);
           } else {
             result = parseFloat(left) * parseFloat(right);
           }
-
-          console.log("value: "+ this.value + " result: " + result.toString())
-
           
           if(num == 3) this.value = this.value.replace(left + " " + operator + "  " + right, result.toString());
           else this.value = this.value.replace(left + " " + operator + " " + right, result.toString());
@@ -156,10 +150,8 @@ export default {
           i = 0;
         }
       }
-    },
-
+    }
   },
-
   computed: {
     isAlreadyDecimal() {
       for(var i = this.value.length; i > 0; i--) {
@@ -208,6 +200,8 @@ export default {
       </div>
     </div>
   </div>
+  
+  <Log :equations="logArray"/>
  
 </template>
 
