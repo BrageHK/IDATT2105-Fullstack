@@ -13,7 +13,6 @@ export default {
 <template>
   <div class="wrapper">
     <header>
-      <h1>Calculator</h1>
       <RouterLink to="/">Kalkulator</RouterLink> |
       <RouterLink to="/kontaktskjema">Kontaktskjema</RouterLink>
     </header>

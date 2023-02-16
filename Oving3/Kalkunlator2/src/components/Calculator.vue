@@ -166,6 +166,7 @@ export default {
 </script>
 
 <template>
+  <h1>Calculator</h1>
   <!-- Display -->
   <div class="calculator">
     <div class="outer-box" style="">
