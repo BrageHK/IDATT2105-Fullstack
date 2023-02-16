@@ -1,5 +1,7 @@
 <script lang="ts">
 import Log from "./Log.vue";
+import axios from 'axios';
+
 
 export default {
   name: "Calculator",
@@ -13,10 +15,11 @@ export default {
       logArray: [] as string[],
     };
   },
-
   methods: {
     number(n: string | number) {
-      this.value += n;
+
+      this.value = this.value.toString();
+      this.value += n.toString();
     },
     operator(op: string) {
       if(this.value.length > 0 && this.value[this.value.length - 1] !== " ") {
@@ -59,98 +62,24 @@ export default {
     clear() {
       this.value = "";
     },
-    equals() {
+    async equals() {
       if(this.value=="") return;
       var lastValue = this.value;
-      this.parseValue();
-      this.multiplyAndDivide();
-      this.add();
-      this.value = (Math.round(parseFloat(this.value)*100000)/100000).toString();
-      if(this.value != lastValue) this.logArray.push(lastValue + " = " + this.value); 
+      const expression = {
+            express: this.value as string,
+            };
+            console.log(expression);
+            try {
+              const response = await axios.post('http://localhost:8080/calculate', expression);
+              this.value = response.data.toString();
+
+              console.log("The response data: ", response.data, " and the value: ", this.value);
+            } catch (error) {
+              console.error(error);
+            }
+
+      if(this.value != lastValue) this.logArray.push(lastValue + " = " + this.value);
     },
-    parseValue() {
-      for(var i = 2; i < this.value.length; i++) {
-        if(this.value[i] == "-") {
-          if(this.value[i-2] != "/" && this.value[i-2] != "*"  && this.value[i-2] != "+") {
-            this.value = this.value.slice(0, i) + " + -" + this.value.slice(i+2);
-
-            i+=4;
-          }
-          if(this.value[i-2] == "*" || this.value[i-2] == "/") {
-            this.value = this.value.slice(0, i) + " -" + this.value.slice(i+2);
-            i+=3;
-          }
-        }
-      }
-    },
-    multiplyAndDivide() {
-      for(var i = 0; i < this.value.length; i++) {
-        if(this.value[i] == "*" || this.value[i] == "/") {
-          var operator = this.value[i];
-
-          var left = "";
-          for(var j = i - 2; j >= 0; j--) {
-            if(this.value[j] == " ") {
-              break;
-            }
-            left += this.value[j];
-          }
-          left = left.split("").reverse().join("");
-
-          var right = "";
-          var num = 2;
-          if(this.value[i+2] == " ") num = 3;
-          for(var j = i + num; j < this.value.length; j++) {
-            if(this.value[j] == " ") {
-              break;
-            }
-            right += this.value[j];
-          }
-
-          var result = 0;
-          if(operator == "/") {
-            result = parseFloat(left) / parseFloat(right);
-          } else {
-            result = parseFloat(left) * parseFloat(right);
-          }
-          
-          if(num == 3) this.value = this.value.replace(left + " " + operator + "  " + right, result.toString());
-          else this.value = this.value.replace(left + " " + operator + " " + right, result.toString());
-          
-        }
-      }
-    },
-    add() {
-      for(var i = 0; i < this.value.length; i++) {
-        if(this.value[i] == "+") {
-          var left = "";
-          var num = 2;
-          if(this.value[i-2] == " ") num = 3;
-          for(var j = i - num; j >= 0; j--) {
-            if(this.value[j] == " ") {
-              break;
-            }
-            left += this.value[j];
-          }
-          left = left.split("").reverse().join("");
-
-          var right = "";
-          for(var j = i + 2; j < this.value.length; j++) {
-            if(this.value[j] == " ") {
-              break;
-            }
-            right += this.value[j];
-          }
-
-          var result = parseFloat(left) + parseFloat(right);
-
-          if(num == 3) this.value = this.value.replace(left + "  + " + right, result.toString());
-          else this.value = this.value.replace(left + " + " + right, result.toString());
-          
-          i = 0;
-        }
-      }
-    }
   },
   computed: {
     isAlreadyDecimal() {
@@ -179,7 +108,7 @@ export default {
     <div class="buttons">
       <div class="grid">
         <button class="button" @click="clear">C</button>
-        <button class="button" @click="parseValue">ANS</button>
+        <button class="button" >ANS</button>
         <button class="button" @click="del">DEL</button>
         <button class="button" @click="operator('+')">+</button>
         <button class="button" @click="number(7)">7</button>

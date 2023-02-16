@@ -3,6 +3,6 @@
 describe("Calculator testing", () => {
   it("visits the app root url", () => {
     cy.visit("/");
-    cy.contains("h1", "Calculator!");
+    cy.contains("h1", "Calculator");
   });
 });

@@ -69,7 +69,7 @@ export default {
                 id: uuidv4(),
             }
             axios.post('http://127.0.0.1:5000/', event)
-            .then(response => {
+            .then(() => {
                 this.store.dispatch("setFeedbackInfo", event);
                 console.log("response", event);
                 this.skjema = {
