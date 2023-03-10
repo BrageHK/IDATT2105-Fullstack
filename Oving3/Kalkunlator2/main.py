@@ -1,6 +1,10 @@
 from flask import Flask, Response, request
 from flask_cors import CORS
 
+#pip3 install flask
+#pip3 install flask_cors
+#python3 -m flask --app main run
+
 app = Flask(__name__)
 CORS(app)
 

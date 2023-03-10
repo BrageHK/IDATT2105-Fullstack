@@ -95,7 +95,7 @@ export default {
 </script>
 
 <template>
-  <h1>Calculator</h1>
+  <h1>Kalkunlator</h1>
   <!-- Display -->
   <div class="calculator">
     <div class="outer-box" style="">
@@ -171,7 +171,9 @@ export default {
 }
 
 .calculator {
-  background: #234;
+  /*background: #234;*/
+  background-image: url("../assets/turkey.jpg");
+  background-size: cover;
   padding: 20px;
   border-radius: 10px;
   max-width: 600px;

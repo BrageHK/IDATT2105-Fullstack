@@ -1,7 +1,6 @@
 package edu.ntnu.idatt2105.backend.controller;
 
-import edu.ntnu.idatt2105.backend.logic.CalculatorLogic;
-import edu.ntnu.idatt2105.backend.logic.LogLogic;
+import edu.ntnu.idatt2105.backend.service.CalculatorLogic;
 import edu.ntnu.idatt2105.backend.model.Expression;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -15,7 +14,6 @@ public class CalculatorController {
     private static final Logger LOGGER = LoggerFactory.getLogger(CalculatorController.class);
 
     private final CalculatorLogic calculatorLogic = new CalculatorLogic();
-    private final LogLogic log = new LogLogic();
 
     @PostMapping("/calculate")
     @ResponseBody
@@ -26,7 +24,6 @@ public class CalculatorController {
         String result;
         try {
             result = calculatorLogic.calculate(exp);
-            log.addLog(exp + " = " + result);
             LOGGER.info("result: "+ result);
         } catch (NumberFormatException e) {
             LOGGER.error("Error with expression format: " + e.getMessage());
